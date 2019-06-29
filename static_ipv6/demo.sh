@@ -37,8 +37,10 @@ ip link set "$NS_2_INT" netns "$NS_2"
 
 # Add IP + bring up ns interfaces
 ip netns exec $NS_1 ip addr add fc00:0:0:100::69/64 dev tap0
+ip netns exec $NS_1 ip link set up dev lo
 ip netns exec $NS_1 ip link set up dev tap0
 ip netns exec $NS_2 ip addr add fc00:0:0:200::69/64 dev tap1
+ip netns exec $NS_2 ip link set up dev lo
 ip netns exec $NS_2 ip link set up dev tap1
 
 # Add default routes - Seems we learn a default route via RA too

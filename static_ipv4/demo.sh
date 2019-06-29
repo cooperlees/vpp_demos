@@ -37,8 +37,10 @@ ip link set "$NS_2_INT" netns "$NS_2"
 
 # Add IP + bring up ns interfaces
 ip netns exec $NS_1 ip addr add 10.6.9.2/25 dev tap0
+ip netns exec $NS_1 ip link set up dev lo
 ip netns exec $NS_1 ip link set up dev tap0
 ip netns exec $NS_2 ip addr add 10.6.9.130/25 dev tap1
+ip netns exec $NS_2 ip link set up dev lo
 ip netns exec $NS_2 ip link set up dev tap1
 
 # Give IPv6 some time to autoconf
