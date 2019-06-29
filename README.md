@@ -5,6 +5,15 @@ I changed my VMs second NIC to vmxnet3. To change a NIC from e1000 to vmxnet3:
 - `vim /path/to/vmware.vmwarevm/*.vmx` and s/e1000/vnxnet3/g
 - I left my oob interface to be e1000 so that it was harder to kill all the boxes network (as I like to SSH to configure)
 
+## Default vpp Ubuntu conf change
+- All I did was add the PCI device + some memory
+```
+dpdk {
+        socket-mem 1024
+        dev 0000:03:00.0
+}
+```
+
 ## Requirements
 - Host with docker installed
 - vpp installed for your platform with an external interface

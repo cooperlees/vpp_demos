@@ -36,14 +36,11 @@ ip link set "$NS_1_INT" netns "$NS_1"
 ip link set "$NS_2_INT" netns "$NS_2"
 
 # Add IP + bring up ns interfaces
-ip netns exec $NS_1 ip addr add 10.6.9.2/25 dev tap0
+ip netns exec $NS_1 ip addr add fc00:0:0:100::69/64 dev tap0
 ip netns exec $NS_1 ip link set up dev tap0
-ip netns exec $NS_2 ip addr add 10.6.9.130/25 dev tap1
+ip netns exec $NS_2 ip addr add fc00:0:0:200::69/64 dev tap1
 ip netns exec $NS_2 ip link set up dev tap1
 
-# Give IPv6 some time to autoconf
-sleep 1
-
-# Add default routes
-ip netns exec $NS_1 ip route add default via 10.6.9.1 dev tap0
-ip netns exec $NS_2 ip route add default via 10.6.9.129 dev tap1
+# Add default routes - Seems we learn a default route via RA too
+ip netns exec $NS_1 ip route add default via fc00:0:0:100::1
+ip netns exec $NS_2 ip route add default via fc00:0:0:200::1
